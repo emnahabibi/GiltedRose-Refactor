@@ -7,7 +7,6 @@ public class BrieItem extends AggregateItem {
 
     @Override
     public void dailyUpdateQuality() {
-
         super.itemUpdate(1, 0, 50);
     }
 }

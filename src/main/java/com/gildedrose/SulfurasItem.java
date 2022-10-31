@@ -7,7 +7,6 @@ public class SulfurasItem extends AggregateItem {
 
     @Override
     public void dailyUpdateQuality() {
-
         super.itemUpdate(0, 80, 80);
     }
 }

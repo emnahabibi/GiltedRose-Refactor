@@ -59,4 +59,31 @@ class GildedRoseTest {
         assertThat(item.quality).isEqualTo(32);
         assertThat(item.sellIn).isEqualTo(7);
     }
+
+    /**
+     * Test to decrement conjured item quality twice faster than normal
+     */
+    @Test
+    void conjuredItemDecreaseQualityTwiceFaster() {
+        Item item = new Item("Conjured Mana Cake", 10, 30);
+        GildedRose gildedRose = new GildedRose(new Item[]{item});
+
+        gildedRose.updateQuality();
+        assertThat(item.quality).isEqualTo(28);
+        assertThat(item.sellIn).isEqualTo(9);
+
+    }
+
+    /**
+     * Test to increase conjured item quality when expired
+     */
+    @Test
+    void conjuredItemIncreasesQualityWhenExpired() {
+        Item item = new Item("Conjured Mana Cake", 0, 30);
+
+        GildedRose gildedRose = new GildedRose(new Item[]{item});
+
+        gildedRose.updateQuality();
+        assertThat(item.quality).isEqualTo(28);
+    }
 }
