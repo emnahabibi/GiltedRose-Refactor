@@ -12,58 +12,69 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            updateItem(item);
+            dailyUpdateQuality(item);
         }
     }
 
+
+    private void dailyUpdateQuality(Item item) {
+        updateItem(item);
+        updateExpiration(item);
+        if (itemExpired(item)) {
+            itemExpiration(item);
+        }
+    }
     private void updateItem(Item item) {
-        if (!ItemTypesConst.BRIE.equals(item.name)
-            && !ItemTypesConst.BACKSTAGE.equals(item.name)) {
-            if (item.quality > 0) {
-                if (!ItemTypesConst.SULFURAS.equals(item.name)) {
-                    item.quality = item.quality - 1;
-                }
+        if (ItemTypesConst.BRIE.equals(item.name)) {
+            incrementQuality(item);
+        } else if (ItemTypesConst.BACKSTAGE.equals(item.name)) {
+            incrementQuality(item);
+            if (item.sellIn < 11) {
+                incrementQuality(item);
+            }
+            if (item.sellIn < 6) {
+                incrementQuality(item);
             }
         } else {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-
-                if (ItemTypesConst.BACKSTAGE.equals(item.name)) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                }
+            if (!ItemTypesConst.SULFURAS.equals(item.name)) {
+                decrementQuality(item);
             }
         }
+    }
 
-        if (!ItemTypesConst.SULFURAS.equals(item.name)) {
-            item.sellIn = item.sellIn - 1;
+    private void itemExpiration(Item item){
+        if (ItemTypesConst.BRIE.equals(item.name)) {
+            incrementQuality(item);
+        } else if (ItemTypesConst.BACKSTAGE.equals(item.name)) {
+            item.quality = 0;
+        } else if (ItemTypesConst.SULFURAS.equals(item.name)) {
+            return;
+        } else {
+            decrementQuality(item);
         }
+    }
 
-        if (item.sellIn < 0) {
-            if (!ItemTypesConst.BRIE.equals(item.name)) {
-                if (!ItemTypesConst.BACKSTAGE.equals(item.name)) {
-                    if (item.quality > 0) {
-                        if (!ItemTypesConst.SULFURAS.equals(item.name)) {
-                            item.quality = item.quality - 1;
-                        }
-                    }
-                } else {
-                    item.quality = item.quality - item.quality;
-                }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-                }
+    private boolean itemExpired(Item item){
+        return item.sellIn < 0;
+    }
+
+    private void updateExpiration(Item item) {
+        if (ItemTypesConst.SULFURAS.equals(item.name)) {
+            return;
+        }
+        --item.sellIn;
+    }
+    private void decrementQuality(Item item) {
+        if (item.quality > 0) {
+            if (!ItemTypesConst.SULFURAS.equals(item.name)) {
+                item.quality = item.quality - 1;
             }
+        }
+    }
+
+    private void incrementQuality(Item item) {
+        if (item.quality < 50) {
+            item.quality = item.quality + 1;
         }
     }
 }
