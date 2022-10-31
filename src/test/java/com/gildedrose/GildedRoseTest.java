@@ -4,24 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class GildedRoseTest {
 
-    @Test
-    void foo() {
-        Item[] items = new Item[]{new Item("foo", 0, 0)};
-        GildedRose app = new GildedRose(items);
-        app.updateQuality();
-        assertEquals("foo", app.items[0].name);
-    }
-
     /**
-     * The Quality of an item is never more than 50
+     * Aged Brie item is never more than 50
      */
     @Test
-    public void backstagePassesQualityShouldNotBeMoreThan50() {
-
+    public void agedBriePassesQualityShouldNotBeMoreThan50() {
         Item item = new Item("Aged Brie", 8, 50);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
@@ -46,11 +35,10 @@ class GildedRoseTest {
     }
 
     /**
-     * Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
-     * Quality drops to 0 after the concert
+     * Backstage quality increases by 2 when there are 10 days or less
      */
     @Test
-    public void qualityIncreasesRelatedToNumberOfDays() {
+    public void backstageQualityIncreasesRelatedToNumberOfDays() {
         Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 8, 30);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
@@ -61,7 +49,21 @@ class GildedRoseTest {
     }
 
     /**
-     * Test to decrement conjured item quality twice faster than normal
+     * Backstage quality increases by 3 when there are 5 days
+     */
+    @Test
+    public void backStagePassesQualityIncreases3TimesIn5Days() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 2);
+        GildedRose gildedRose = new GildedRose(new Item[]{item});
+
+        gildedRose.updateQuality();
+        assertThat(item.name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
+        assertThat(item.sellIn).isEqualTo(4);
+        assertThat(item.quality).isEqualTo(5);
+    }
+
+    /**
+     * Conjured item decrement quality twice faster than normal
      */
     @Test
     void conjuredItemDecreaseQualityTwiceFaster() {
@@ -75,15 +77,16 @@ class GildedRoseTest {
     }
 
     /**
-     * Test to increase conjured item quality when expired
+     * Conjured item increase quality when expired
      */
     @Test
     void conjuredItemIncreasesQualityWhenExpired() {
         Item item = new Item("Conjured Mana Cake", 0, 30);
-
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();
         assertThat(item.quality).isEqualTo(28);
     }
+
+
 }
