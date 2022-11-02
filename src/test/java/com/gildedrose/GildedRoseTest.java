@@ -2,8 +2,8 @@ package com.gildedrose;
 
 import org.junit.jupiter.api.Test;
 
+import static com.gildedrose.ItemTypesConst.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 class GildedRoseTest {
 
     /**
@@ -11,11 +11,11 @@ class GildedRoseTest {
      */
     @Test
      void agedBriePassesQualityShouldNotBeMoreThan50() {
-        Item item = new Item("Aged Brie", 8, 50);
+        Item item = new Item(BRIE, 8, 50);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();
-        assertThat(item.name).isEqualTo("Aged Brie");
+        assertThat(item.name).isEqualTo(BRIE);
         assertThat(item.quality).isEqualTo(50);
         assertThat(item.sellIn).isEqualTo(7);
     }
@@ -25,11 +25,11 @@ class GildedRoseTest {
      */
     @Test
      void sulfurasQualityShouldNotBeModified() {
-        Item item = new Item("Sulfuras, Hand of Ragnaros", 8, 80);
+        Item item = new Item(SULFURAS, 8, 80);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();
-        assertThat(item.name).isEqualTo("Sulfuras, Hand of Ragnaros");
+        assertThat(item.name).isEqualTo(SULFURAS);
         assertThat(item.quality).isEqualTo(80);
         assertThat(item.sellIn).isEqualTo(7);
     }
@@ -38,12 +38,12 @@ class GildedRoseTest {
      * Backstage quality increases by 2 when there are 10 days or less
      */
     @Test
-     void backstageQualityIncreasesRelatedToNumberOfDays() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 8, 30);
+     void backstageQualityIncreases2TimesIn10Days() {
+        Item item = new Item(BACKSTAGE, 8, 30);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();
-        assertThat(item.name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
+        assertThat(item.name).isEqualTo(BACKSTAGE);
         assertThat(item.quality).isEqualTo(32);
         assertThat(item.sellIn).isEqualTo(7);
     }
@@ -53,13 +53,23 @@ class GildedRoseTest {
      */
     @Test
      void backStagePassesQualityIncreases3TimesIn5Days() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 2);
+        Item item = new Item(BACKSTAGE, 5, 2);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();
-        assertThat(item.name).isEqualTo("Backstage passes to a TAFKAL80ETC concert");
+        assertThat(item.name).isEqualTo(BACKSTAGE);
         assertThat(item.sellIn).isEqualTo(4);
         assertThat(item.quality).isEqualTo(5);
+    }
+    @Test
+    public void SulfurasPassesQualityIncreases0WhenSellInOff() {
+        Item item = new Item(SULFURAS, -5, 80);
+        GildedRose gildedRose = new GildedRose(new Item[]{item});
+
+        gildedRose.updateQuality();
+        assertThat(item.name).isEqualTo(SULFURAS);
+        assertThat(item.sellIn).isEqualTo(-5);
+        assertThat(item.quality).isEqualTo(80);
     }
 
     /**
@@ -67,7 +77,7 @@ class GildedRoseTest {
      */
     @Test
     void conjuredItemDecreaseQualityTwiceFaster() {
-        Item item = new Item("Conjured Mana Cake", 10, 30);
+        Item item = new Item(CONJURED, 10, 30);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();
@@ -81,7 +91,7 @@ class GildedRoseTest {
      */
     @Test
     void conjuredItemIncreasesQualityWhenExpired() {
-        Item item = new Item("Conjured Mana Cake", 0, 30);
+        Item item = new Item(CONJURED, 0, 30);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
         gildedRose.updateQuality();

@@ -15,4 +15,7 @@ public interface AggregateItemInterface {
      * @param maxQuality
      */
     void itemUpdate(int coef, int minQuality, int maxQuality);
+
+    void itemUpdate(int coef, int minQuality, int maxQuality, boolean isLegendary);
+
 }

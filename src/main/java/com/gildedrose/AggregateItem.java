@@ -2,7 +2,15 @@ package com.gildedrose;
 
 public class AggregateItem implements AggregateItemInterface {
 
-    Item item;
+    private Item item;
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 
     public AggregateItem(Item item) {
         this.item = item;
@@ -36,12 +44,27 @@ public class AggregateItem implements AggregateItemInterface {
 
     @Override
     public void itemUpdate(int coef, int minQuality, int maxQuality) {
+        itemUpdate(coef, minQuality, maxQuality, false);
+    }
+
+    /**
+     *
+     * @param coef
+     * @param minQuality
+     * @param maxQuality
+     * @param isLegendary
+     */
+    @Override
+    public void itemUpdate(int coef, int minQuality, int maxQuality, boolean isLegendary) {
         updateQuality(coef, minQuality, maxQuality);
-        --item.sellIn;
+        if (!isLegendary) {
+            --this.getItem().sellIn;
+        }
+
     }
 
     private boolean itemExpired() {
-        return item.sellIn < 0;
+        return this.getItem().sellIn < 0;
     }
 
     /**

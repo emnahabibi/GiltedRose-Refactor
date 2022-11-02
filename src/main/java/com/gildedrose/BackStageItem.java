@@ -7,11 +7,11 @@ public class BackStageItem extends AggregateItem {
 
     @Override
     public void dailyUpdateQuality() {
-        if (this.item.sellIn < 0) {
-            this.item.quality = 0;
-        } else if (this.item.sellIn < 6) {
+        if (this.getItem().sellIn < 0) {
+            this.getItem().quality = 0;
+        } else if (this.getItem().sellIn < 6) {
             super.itemUpdate(3, 0, 50);
-        } else if (this.item.sellIn < 11) {
+        } else if (this.getItem().sellIn < 11) {
             super.itemUpdate(2, 0, 50);
         } else {
             super.itemUpdate(1, 0, 50);
