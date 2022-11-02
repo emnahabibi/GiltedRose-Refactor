@@ -10,7 +10,7 @@ class GildedRoseTest {
      * Aged Brie item is never more than 50
      */
     @Test
-    public void agedBriePassesQualityShouldNotBeMoreThan50() {
+     void agedBriePassesQualityShouldNotBeMoreThan50() {
         Item item = new Item("Aged Brie", 8, 50);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
@@ -24,7 +24,7 @@ class GildedRoseTest {
      * Sulfuras, being a legendary item, never has to be sold or decreases in Quality
      */
     @Test
-    public void sulfurasQualityShouldNotBeModified() {
+     void sulfurasQualityShouldNotBeModified() {
         Item item = new Item("Sulfuras, Hand of Ragnaros", 8, 80);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
@@ -38,7 +38,7 @@ class GildedRoseTest {
      * Backstage quality increases by 2 when there are 10 days or less
      */
     @Test
-    public void backstageQualityIncreasesRelatedToNumberOfDays() {
+     void backstageQualityIncreasesRelatedToNumberOfDays() {
         Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 8, 30);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
@@ -52,7 +52,7 @@ class GildedRoseTest {
      * Backstage quality increases by 3 when there are 5 days
      */
     @Test
-    public void backStagePassesQualityIncreases3TimesIn5Days() {
+     void backStagePassesQualityIncreases3TimesIn5Days() {
         Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 2);
         GildedRose gildedRose = new GildedRose(new Item[]{item});
 
